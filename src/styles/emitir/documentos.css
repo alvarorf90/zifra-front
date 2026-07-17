@@ -1,0 +1,206 @@
+.container-ts{
+  background: #ffffff33 !important;
+}
+
+.documento-container {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.documento-section {
+  background: linear-gradient(135deg, #86cae3, #bdbfc1);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+.documento-title {
+  font-size: 14px !important;
+  font-weight: 500;
+  color: #2d3748 !important;
+  margin-bottom: 5px !important;
+}
+
+.documento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.documento-grid-totales {
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+.documento-field label {
+  display: block;
+  font-size: 0.9rem;
+  color: #4a5568;
+  margin-bottom: 2px;
+}
+
+.documento-field input,
+.documento-field select,
+.documento-field textarea {
+  width: 100%;
+  border: 1px solid #cbd5e0;
+  padding: 5px 2px;
+}
+
+.documento-btn-add {
+  align-self: end;
+  background-color: #3182ce;
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.documento-btn-add:hover {
+  background-color: #2b6cb0;
+}
+
+.documento-table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.documento-table th,
+.documento-table td {
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.documento-totales {
+  background-color: #f7fafc;
+  border-radius: 0.5rem;
+  padding: 15px;
+  display: inline-grid;
+  width: 48%;
+}
+
+.documento-datos {
+  font-size: 14px;
+  color: #2b6cb0;
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+.documento-total {
+  font-size: 16px;
+  font-weight: bold;
+  color: #2b6cb0;
+  display: inline-flex;
+  justify-content: space-between;
+  padding-top: 5px;
+}
+
+.documento-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.documento-btn-emitir {
+  font-weight: 600 !important;
+  padding: 12px !important;  
+}
+
+.documento-msg {
+  font-size: 0.95rem;
+  color: #2d3748;
+}
+
+.documento-fecha {
+  padding: 0px 5px !important;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  width: 140px !important;
+  height: 31px;
+}
+.documento-fecha:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+}
+.documento-fecha::placeholder {
+  color: #999;
+}
+.documento-fecha::-webkit-calendar-picker-indicator {
+  background: url("data:image/svg+xml;utf8,<svg fill='%23007bff' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 10h10v2H7zm0 4h7v2H7z'/><path d='M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z'/></svg>")
+    no-repeat center;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.documento-fecha::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+.documento-mes {
+  padding: 0px 5px !important;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  width: 155px !important;
+  height: 31px;
+}
+.documento-mes:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+}
+.documento-mes::placeholder {
+  color: #999;
+}
+.documento-mes::-webkit-calendar-picker-indicator {
+  background: url("data:image/svg+xml;utf8,<svg fill='%23007bff' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 10h10v2H7zm0 4h7v2H7z'/><path d='M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z'/></svg>")
+    no-repeat center;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.documento-mes::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+.documento-input{
+  width: 140px !important;
+  padding: 5px !important;
+  height: 31px;
+}
+
+.tabla-input {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px;
+  width: 50px;
+  text-align: center;
+}
+.tabla-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 3px #3b82f6;
+}
+
+.texto-corto {
+  max-width: 250px; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.lineaSeparadora{
+  display: inline-grid;
+  width: 100%;
+  margin: 20px 0px;
+  border-bottom: 1px solid #2b6cb0;
+}

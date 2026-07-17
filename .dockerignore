@@ -1,0 +1,18 @@
+# Node modules (se instalan durante build, no se copian)
+node_modules
+
+# Git y control de versiones
+.git
+.gitignore
+
+# Archivos de entorno locales y secretos
+.env*
+.env.production
+
+# Archivos de configuración de Docker que no necesitamos en la imagen
+Dockerfile
+
+# Documentación y otros archivos innecesarios
+README.md
+tests/
+docs/
