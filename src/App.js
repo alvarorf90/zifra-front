@@ -16,6 +16,8 @@ import GuiaRemision from './generar/GuiaRemision';
 import Recepcion from './consultar/Recepcion';
 import ReporteRecibidos from './reporteria/ReporteRecibidos';
 import Ats from './consultar/Ats';
+import Generar from './ats/Generar';
+
 import { LoadingProvider } from './context/LoadingContext';
 import { EmpresaProvider } from './context/EmpresaContext';
 
@@ -49,6 +51,7 @@ const App = () => {
           <Route path="generar/guia" element={<GuiaRemision />} />
           <Route path="reporteria/reporte-recibidos" element={<ReporteRecibidos />} />
           <Route path="consultar/ats" element={<Ats />} />
+          <Route path="ats/generar" element={<Generar />} />
 
           {/* Redirigir raíz a /bienvenido */}
           <Route index element={<Navigate to="bienvenido" />} />

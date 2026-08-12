@@ -20,6 +20,7 @@ const Factura = () => {
     const [secuencial, setSecuencial] = useState(0);
     const [fechaEmision, setFechaEmision] = useState(""); 
     const [numGuia, setNumGuia] = useState("");
+    const [placa, setPlaca] = useState("");
     
     const [detalle, setDetalle] = useState([]);    
 
@@ -86,6 +87,30 @@ const Factura = () => {
                 const mes = String(fechaHoy.getMonth() + 1).padStart(2, "0");
                 const dia = String(fechaHoy.getDate()).padStart(2, "0");
                 setFechaEmision(`${anio}-${mes}-${dia}`);
+                setInfoAdicional((prev) => {
+                    const descripcion = "RUC Proveedor";
+
+                    const indice = prev.findIndex(
+                        (item) => item.descripcionIA.toLowerCase() === descripcion.toLowerCase()
+                    );
+
+                    if (indice >= 0) {
+                        const copia = [...prev];
+                        copia[indice] = {
+                            ...copia[indice],
+                            valorIA: "0993403978001",
+                        };
+                        return copia;
+                    }
+
+                    return [
+                        ...prev,
+                        {
+                            descripcionIA: descripcion,
+                            valorIA: "0993403978001",
+                        },
+                    ];
+                });
             } catch (error) {
                 console.error("Error cargando datos:", error);
             } finally {
@@ -121,7 +146,11 @@ const Factura = () => {
                     }
                 });
             } else {
-                setInfoAdicional([]);            
+                setInfoAdicional((prev) =>
+                    prev.filter(
+                        (item) => item.descripcionIA.toLowerCase() !== "correo"
+                    )
+                );
             }
         } catch (error) {
             console.error("Error cargando correos:", error);
@@ -396,6 +425,8 @@ const Factura = () => {
                 secuencia: secuenciaFormateada,
                 emails: cliente?.email || "",
                 fechaEmision,
+                guiaRemision: numGuia || "",
+                placa: placa || "",
                 dirEstablecimiento: empresaSeleccionada?.direccionMatriz || "",
                 tipoIdentificacionComprador: cliente?.tipoIdentificacion || "07",
                 razonSocialComprador: cliente?.razonSocial || cliente?.nombreCliente,
@@ -429,7 +460,12 @@ const Factura = () => {
             setDetalle([]);
             setTotales({ subtotal: 0, iva: 0, descuento: 0, total: 0 });
             setFormaPago([]);
-            setInfoAdicional([]);
+            setInfoAdicional([
+                {
+                    descripcionIA: "RUC Proveedor",
+                    valorIA: "0993403978001",
+                },
+            ]);
             setSecuencial(0);
             setPtoEmisionSeleccionado("");
             setClienteSeleccionado("");            
@@ -502,6 +538,27 @@ const Factura = () => {
                                         value = value.slice(0, 3) + "-" + value.slice(3, 6) + "-" + value.slice(6, 15);
                                     }
                                     setNumGuia(value);
+                                }}
+                            />
+                        </div>
+                        <div className="documento-field" style={{ display: "inline-grid" }}>
+                            <label>Placa:</label>
+                            <input type="text" placeholder="AAA0000" value={placa} maxLength={7} className="documento-input"
+                                onChange={(e) => {
+                                    let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+                                    const letras = value.replace(/[^A-Z]/g, "").slice(0, 3);
+                                    const numeros = value.replace(/\D/g, "").slice(0, 4);
+                                    setPlaca(letras + numeros);
+                                }}
+                                onBlur={() => {
+                                    if (placa.length >= 6) {
+                                        const letras = placa.slice(0, 3);
+                                        let numeros = placa.slice(3);
+                                        if (numeros.length === 3) {
+                                            numeros = "0" + numeros;
+                                        }
+                                        setPlaca(letras + numeros);
+                                    }
                                 }}
                             />
                         </div>
@@ -614,9 +671,11 @@ const Factura = () => {
                                             <td>{d.descripcionIA}</td>
                                             <td className="texto-corto" title={d.valorIA}>{d.valorIA}</td>
                                             <td>
-                                                <button className="btn-accion btn-toggle" title="Quitar detalle" onClick={() => quitarInfoAdicional(id)}>
-                                                    🗑️
-                                                </button>
+                                                {d.descripcionIA.toLowerCase() !== "ruc proveedor" && (
+                                                    <button className="btn-accion btn-toggle" title="Quitar detalle" onClick={() => quitarInfoAdicional(id)}>
+                                                        🗑️
+                                                    </button>
+                                                )}
                                             </td>
                                         </tr>
                                     ))}

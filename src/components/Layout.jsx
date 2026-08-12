@@ -4,8 +4,9 @@ import api from '../config/axios';
 import logoZifra from '../img/logo_zifra.png';
 import useSessionManager from '../hooks/useSessionManager';
 import { useLoading } from "../context/LoadingContext";
-import { FiFolder, FiFileText, FiSearch, FiHome, FiSettings, FiChevronDown, FiChevronRight} from "react-icons/fi";
+import { FiFolder, FiFileText, FiSearch, FiHome, FiSettings, FiChevronDown, FiChevronRight,  FiArchive} from "react-icons/fi";
 
+//OTROS ICONOS = FiLayers, FiBookOpen, FiPackage, FiGrid
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const Layout = () => {
     if (text.includes("consultar")) return <FiSearch />;
     if (text.includes("administrador")) return <FiSettings />;
     if (text.includes("reportería")) return <FiFileText />;
+    if (text.includes("ats")) return <FiArchive />;
     return <FiFolder />; // por defecto
   };
 

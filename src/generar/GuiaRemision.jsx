@@ -75,6 +75,30 @@ const GuiaRemision = () => {
                 const dia = String(fechaHoy.getDate()).padStart(2, "0");
                 setFechaIniTransporte(`${anio}-${mes}-${dia}`);                
                 setFechaFinTransporte(`${anio}-${mes}-${dia}`);
+                setInfoAdicional((prev) => {
+                    const descripcion = "RUC Proveedor";
+
+                    const indice = prev.findIndex(
+                        (item) => item.descripcionIA.toLowerCase() === descripcion.toLowerCase()
+                    );
+
+                    if (indice >= 0) {
+                        const copia = [...prev];
+                        copia[indice] = {
+                            ...copia[indice],
+                            valorIA: "0993403978001",
+                        };
+                        return copia;
+                    }
+
+                    return [
+                        ...prev,
+                        {
+                            descripcionIA: descripcion,
+                            valorIA: "0993403978001",
+                        },
+                    ];
+                });
             } catch (error) {
                 console.error("Error cargando datos:", error);
             } finally {
@@ -268,7 +292,12 @@ const GuiaRemision = () => {
             });
             setPtoEmision(data);
             setDetalle([]);
-            setInfoAdicional([]);
+            setInfoAdicional([
+                {
+                    descripcionIA: "RUC Proveedor",
+                    valorIA: "0993403978001",
+                },
+            ]);
             setSecuencial(0);
             setPtoEmisionSeleccionado("");
             setMsjExito(mensajeBackend);
@@ -511,9 +540,11 @@ const GuiaRemision = () => {
                                             <td>{d.descripcionIA}</td>
                                             <td className="texto-corto" title={d.valorIA}>{d.valorIA}</td>
                                             <td>
-                                                <button className="btn-accion btn-toggle" title="Quitar detalle" onClick={() => quitarInfoAdicional(id)}>
-                                                    🗑️
-                                                </button>
+                                                {d.descripcionIA.toLowerCase() !== "ruc proveedor" && (
+                                                    <button className="btn-accion btn-toggle" title="Quitar detalle" onClick={() => quitarInfoAdicional(id)}>
+                                                        🗑️
+                                                    </button>
+                                                )}
                                             </td>
                                         </tr>
                                     ))}
