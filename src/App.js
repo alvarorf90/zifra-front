@@ -17,6 +17,7 @@ import Recepcion from './consultar/Recepcion';
 import ReporteRecibidos from './reporteria/ReporteRecibidos';
 import Ats from './consultar/Ats';
 import Generar from './ats/Generar';
+import CatastroSRI from './consultar/CatastroSRI';
 
 import { LoadingProvider } from './context/LoadingContext';
 import { EmpresaProvider } from './context/EmpresaContext';
@@ -52,6 +53,7 @@ const App = () => {
           <Route path="reporteria/reporte-recibidos" element={<ReporteRecibidos />} />
           <Route path="consultar/ats" element={<Ats />} />
           <Route path="ats/generar" element={<Generar />} />
+          <Route path="consultar/catastroSRI" element={<CatastroSRI />} />
 
           {/* Redirigir raíz a /bienvenido */}
           <Route index element={<Navigate to="bienvenido" />} />

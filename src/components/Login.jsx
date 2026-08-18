@@ -92,7 +92,7 @@ const Login = () => {
           <div style={{marginTop:"10px", borderTop:"1px solid #FFF", opacity:"20%"}}></div>
           <div className="login-footer"> 
             <div>&copy; {new Date().getFullYear()} Zifra</div>            
-            <div>Soporte: soporte@zifraec.com</div>
+            <div>Soporte: soporte@soficot.com</div>
           </div>
         </form>
       </div>
