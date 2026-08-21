@@ -2,11 +2,12 @@ import React from "react";
 import { useEmpresas } from "../context/EmpresaContext";
 import { buildIframeUrl } from "../config/apiConfig";
 
-const Generar = () => {
+const CompraVentas = () => {
     const { empresaSeleccionada } = useEmpresas();
-    const iframeSrc = buildIframeUrl("/regulatorios/ats", {
+    const iframeSrc = buildIframeUrl("/regulatorios/anexoCompraVentas", {
         ruc: empresaSeleccionada?.ruc,
     });
+
     return (
         <div
             style={{
@@ -17,7 +18,7 @@ const Generar = () => {
         >
             {iframeSrc ? (
                 <iframe
-                    title="Anexo Transaccional ATS"
+                    title="Anexo Compras y Ventas"
                     src={iframeSrc}
                     width="100%"
                     height="100%"
@@ -35,4 +36,4 @@ const Generar = () => {
     );
 };
 
-export default Generar;
+export default CompraVentas;

@@ -1,6 +1,7 @@
 {
-  "inactivityTime": 900000,           
-  "refreshThreshold": 120000,         
+  "inactivityTime": 900000,
+  "refreshThreshold": 900000,
   "validateUrl": "/api/auth/validate",
-  "minValidateInterval": 60000
+  "minValidateInterval": 900000,
+  "maxValidateRetries": 3
 }

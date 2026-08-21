@@ -1,15 +1,24 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import api from '../config/axios';
 import logoZifra from '../img/logo_zifra.png';
 import useSessionManager from '../hooks/useSessionManager';
+import { clearSessionStorage } from '../utils/session';
 import { useLoading } from "../context/LoadingContext";
 import { FiFolder, FiFileText, FiSearch, FiHome, FiSettings, FiChevronDown, FiChevronRight,  FiArchive} from "react-icons/fi";
 
 //OTROS ICONOS = FiLayers, FiBookOpen, FiPackage, FiGrid
 
+const RUTAS_SIN_PADDING = [
+  '/ats/generar',
+  '/ats/compraVentas',
+  '/consultar/validacionRetenciones',
+];
+
 const Layout = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const sinPadding = RUTAS_SIN_PADDING.some((ruta) => location.pathname.endsWith(ruta));
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [menu, setMenu] = useState([]);
   const [expandedItem, setExpandedItem] = useState(null);   
@@ -21,7 +30,7 @@ const Layout = () => {
     if (text.includes("consultar")) return <FiSearch />;
     if (text.includes("administrador")) return <FiSettings />;
     if (text.includes("reportería")) return <FiFileText />;
-    if (text.includes("ats")) return <FiArchive />;
+    if (text.includes("anexos")) return <FiArchive />;
     return <FiFolder />; // por defecto
   };
 
@@ -31,12 +40,7 @@ const Layout = () => {
 
   // función para cerrar sesión 
   const handleLogout = useCallback(() => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('menu');
-    localStorage.removeItem("username");
-    localStorage.removeItem('empresaSeleccionada');
-    localStorage.removeItem("rol");
+    clearSessionStorage();
     navigate('/login');
   }, [navigate]);
 
@@ -156,7 +160,7 @@ const Layout = () => {
         </div>
 
         {/* Contenido principal */}
-        <main className="main-content">
+        <main className={`main-content${sinPadding ? ' main-content--no-padding' : ''}`}>
           <Outlet />
         </main>
       </div>
