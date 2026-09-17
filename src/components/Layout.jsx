@@ -5,7 +5,7 @@ import logoZifra from '../img/logo_zifra.png';
 import useSessionManager from '../hooks/useSessionManager';
 import { clearSessionStorage } from '../utils/session';
 import { useLoading } from "../context/LoadingContext";
-import { FiFolder, FiFileText, FiSearch, FiHome, FiSettings, FiChevronDown, FiChevronRight,  FiArchive} from "react-icons/fi";
+import { FiFolder, FiFileText, FiSearch, FiHome, FiSettings, FiChevronDown, FiChevronRight,  FiArchive, FiLayers} from "react-icons/fi";
 
 //OTROS ICONOS = FiLayers, FiBookOpen, FiPackage, FiGrid
 
@@ -31,6 +31,7 @@ const Layout = () => {
     if (text.includes("administrador")) return <FiSettings />;
     if (text.includes("reportería")) return <FiFileText />;
     if (text.includes("anexos")) return <FiArchive />;
+    if (text.includes("formularios")) return <FiLayers />;
     return <FiFolder />; // por defecto
   };
 

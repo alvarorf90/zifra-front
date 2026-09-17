@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import api from "../config/axios";
 import { getValidateUrl } from "../config/apiConfig";
+import { loadParametros } from "../config/parametrosLoader";
 import { clearSessionStorage } from "../utils/session";
 
 const ACTIVITY_EVENTS = ["click", "keydown", "touchstart"];
@@ -113,16 +114,11 @@ export default function useSessionManager({ onLogout } = {}) {
   }, [config, validateWithRetry]);
 
   useEffect(() => {
-    const loadConfig = async () => {
-      try {
-        const res = await fetch("/config/parametros.json");
-        const json = await res.json();
-        setConfig(json);
-      } catch (e) {
+    loadParametros()
+      .then(setConfig)
+      .catch((e) => {
         console.error("Error cargando configuración:", e);
-      }
-    };
-    loadConfig();
+      });
   }, []);
 
   useEffect(() => {

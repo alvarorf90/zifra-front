@@ -5,6 +5,28 @@ import ModalExito from "../components/ModalExito";
 import "../styles/consultar/comprobantes.css";
 import JSZip from "jszip";
 
+const MAX_UPLOAD_MB = Number(process.env.REACT_APP_MAX_UPLOAD_SIZE_MB) || 50;
+const MAX_UPLOAD_BYTES = MAX_UPLOAD_MB * 1024 * 1024;
+
+const formatFileSize = (bytes) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+};
+
+const getErrorMessage = (err, defaultMsg) => {
+    if (err.response?.status === 413) {
+        return `El archivo supera el tamaño máximo permitido por el servidor. Consulte con el administrador.`;
+    }
+
+    const data = err.response?.data;
+    if (typeof data === "string" && data.trim().startsWith("<")) {
+        return defaultMsg;
+    }
+
+    return data?.message || (typeof data === "string" ? data : null) || err.message || defaultMsg;
+};
+
 const Ats = () => {
     const { setIsLoading } = useLoading();
     const [data, setData] = useState([]);
@@ -157,6 +179,10 @@ const Ats = () => {
             setModalError("🚫 Solo se permiten archivos XML o ZIP");
             return;
         }
+        if (file.size > MAX_UPLOAD_BYTES) {
+            setModalError(`🚫 El archivo (${formatFileSize(file.size)}) supera el límite de ${MAX_UPLOAD_MB} MB`);
+            return;
+        }
         setModalError(""); 
         setarchivoATS(file);
     };
@@ -182,9 +208,7 @@ const Ats = () => {
                 setModalError("Formato no válido. Solo se permite XML o ZIP");
             }            
         } catch (err) {
-            const mensajeError =  err.response?.data?.message ||   
-                err.response?.data || err.message || "Error inesperado al cargar el XML";
-            mostrarError(mensajeError);
+            mostrarError(getErrorMessage(err, "Error inesperado al cargar el XML"));
         } finally {
             setIsLoading(false);
             setLoadingLocal(false);
@@ -194,11 +218,7 @@ const Ats = () => {
     const enviarXml = async (file, nombre = "archivo.xml") => {
         const formData = new FormData();
         formData.append("xml", file, nombre);
-        return await api.post("/ats/cargar", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
+        return await api.post("/ats/cargar", formData);
     };
 
     const procesarZip = async (file) => {
@@ -223,10 +243,8 @@ const Ats = () => {
                     await enviarXml(contenido, nombre);
                     exitosos++;
                 } catch (err) {
-                    //const mensaje = err.response?.data?.message || err.message;
-                    //const errorTexto = `${nombre}: ${mensaje}`;
-                    const errorTexto = `${nombre}`;
-                    errores.push(errorTexto);
+                    const mensaje = getErrorMessage(err, "Error al cargar");
+                    errores.push(`${nombre}: ${mensaje}`);
                 }
                 setProcesados(index);
                 setProgreso(Math.round((index / xmlFiles.length) * 100));
@@ -287,9 +305,7 @@ const Ats = () => {
             setMsjExito("Descarga de respuesta ATS realizada con éxito");
             setShowModalExitoso(true);            
         } catch (err) {
-            const mensajeError =  err.response?.data?.message ||   
-                err.response?.data || err.message || "Error al descargar el archivo";
-            mostrarError(mensajeError);
+            mostrarError(getErrorMessage(err, "Error al descargar el archivo"));
         } finally {
             setIsLoading(false);
         }
@@ -307,12 +323,7 @@ const Ats = () => {
             setMsjExito("✅ ATS enviado a reproceso correctamente");
             setShowModalExitoso(true);
         } catch (err) {
-            const mensajeError =
-                err.response?.data?.message ||
-                err.response?.data ||
-                err.message ||
-                "Error al reprocesar el ATS";
-            mostrarError(mensajeError);
+            mostrarError(getErrorMessage(err, "Error al reprocesar el ATS"));
         } finally {
             setIsLoading(false);
         }
@@ -621,6 +632,9 @@ const Ats = () => {
                                 ) : (
                                     <span>📄 Archivo XML detectado</span>
                                 )}
+                                <span style={{ marginLeft: "8px", color: "#666" }}>
+                                    ({formatFileSize(archivoATS.size)})
+                                </span>
                             </div>
                         )}
 

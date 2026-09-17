@@ -1,12 +1,16 @@
 import React from "react";
 import { useEmpresas } from "../context/EmpresaContext";
-import { buildIframeUrl } from "../config/apiConfig";
+import { buildIframeUrl, resolveIframeBaseUrl } from "../config/apiConfig";
+import useParametros from "../hooks/useParametros";
 
 const CompraVentas = () => {
     const { empresaSeleccionada } = useEmpresas();
-    const iframeSrc = buildIframeUrl("/regulatorios/anexoCompraVentas", {
-        ruc: empresaSeleccionada?.ruc,
-    });
+    const { parametros, loading } = useParametros();
+    const iframeSrc = buildIframeUrl(
+        "/regulatorios/anexoCompraVentas",
+        { ruc: empresaSeleccionada?.ruc },
+        resolveIframeBaseUrl(parametros)
+    );
 
     return (
         <div
@@ -16,7 +20,7 @@ const CompraVentas = () => {
                 overflow: "hidden"
             }}
         >
-            {iframeSrc ? (
+            {loading ? null : iframeSrc ? (
                 <iframe
                     title="Anexo Compras y Ventas"
                     src={iframeSrc}

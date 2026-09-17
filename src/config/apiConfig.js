@@ -4,8 +4,16 @@ export const IFRAME_BASE_URL = (process.env.REACT_APP_IFRAME_BASE_URL || "").rep
 
 export const getValidateUrl = () => `${API_BASE_URL}/api/auth/validate`;
 
-export const buildIframeUrl = (path, params = {}) => {
-  if (!IFRAME_BASE_URL) return null;
+/** Prioridad: parametros.json (runtime) → REACT_APP_IFRAME_BASE_URL (build). */
+export const resolveIframeBaseUrl = (parametros) => {
+  const fromFile = (parametros?.iframeBaseUrl || "").trim().replace(/\/$/, "");
+  if (fromFile) return fromFile;
+  return IFRAME_BASE_URL;
+};
+
+export const buildIframeUrl = (path, params = {}, iframeBaseUrl) => {
+  const base = (iframeBaseUrl ?? IFRAME_BASE_URL).replace(/\/$/, "");
+  if (!base) return null;
 
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   const searchParams = new URLSearchParams();
@@ -17,5 +25,5 @@ export const buildIframeUrl = (path, params = {}) => {
   });
 
   const query = searchParams.toString();
-  return `${IFRAME_BASE_URL}${normalizedPath}${query ? `?${query}` : ""}`;
+  return `${base}${normalizedPath}${query ? `?${query}` : ""}`;
 };

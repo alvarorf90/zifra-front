@@ -1,12 +1,16 @@
 import React from "react";
 import { useEmpresas } from "../context/EmpresaContext";
-import { buildIframeUrl } from "../config/apiConfig";
+import { buildIframeUrl, resolveIframeBaseUrl } from "../config/apiConfig";
+import useParametros from "../hooks/useParametros";
 
 const Generar = () => {
     const { empresaSeleccionada } = useEmpresas();
-    const iframeSrc = buildIframeUrl("/regulatorios/ats", {
-        ruc: empresaSeleccionada?.ruc,
-    });
+    const { parametros, loading } = useParametros();
+    const iframeSrc = buildIframeUrl(
+        "/regulatorios/ats",
+        { ruc: empresaSeleccionada?.ruc },
+        resolveIframeBaseUrl(parametros)
+    );
     return (
         <div
             style={{
@@ -15,7 +19,7 @@ const Generar = () => {
                 overflow: "hidden"
             }}
         >
-            {iframeSrc ? (
+            {loading ? null : iframeSrc ? (
                 <iframe
                     title="Anexo Transaccional ATS"
                     src={iframeSrc}

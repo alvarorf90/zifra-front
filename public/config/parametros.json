@@ -3,5 +3,6 @@
   "refreshThreshold": 900000,
   "validateUrl": "/api/auth/validate",
   "minValidateInterval": 900000,
-  "maxValidateRetries": 3
+  "maxValidateRetries": 3,
+  "iframeBaseUrl": "https://h2h.grupoinforum.com:9281"
 }

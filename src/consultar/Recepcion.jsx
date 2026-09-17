@@ -29,6 +29,29 @@ const Recepcion = () => {
     const rolUsuario = localStorage.getItem("rol"); 
     const esAdmin = rolUsuario === "ADMIN";
 
+    const fechaHoyStr = () => {
+      const fechaHoy = new Date();
+      const anio = fechaHoy.getFullYear();
+      const mes = String(fechaHoy.getMonth() + 1).padStart(2, "0");
+      const dia = String(fechaHoy.getDate()).padStart(2, "0");
+      return `${anio}-${mes}-${dia}`;
+    };
+
+    const ultimoDiaDelMes = (anio, mes) => {
+      const ultimoDia = new Date(anio, mes, 0).getDate();
+      return `${anio}-${String(mes).padStart(2, "0")}-${String(ultimoDia).padStart(2, "0")}`;
+    };
+
+    const handleFechaInicioChange = (value) => {
+      setFechaInicio(value);
+      if (value) {
+        const [anio, mes] = value.split("-").map(Number);
+        const finMes = ultimoDiaDelMes(anio, mes);
+        const hoy = fechaHoyStr();
+        setFechaFin(finMes > hoy ? hoy : finMes);
+      }
+    };
+
     useEffect(() => {
       const cargarFechas = () => {
         try {
@@ -179,7 +202,7 @@ const Recepcion = () => {
             </div>
             <div style={{display:"inline-grid"}}>
                 <label style={{color: "#221f1f", marginBottom:"5px"}}>Fecha Inicio:</label>
-                <input type="date" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)}
+                <input type="date" value={fechaInicio} onChange={(e) => handleFechaInicioChange(e.target.value)}
                     className="modal-date" title="Fecha Inicio" style={{color: "#221f1f", width:"110px"}}/>
             </div>
             <div style={{display:"inline-grid"}}>

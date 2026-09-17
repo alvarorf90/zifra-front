@@ -3,11 +3,11 @@ import { useEmpresas } from "../context/EmpresaContext";
 import { buildIframeUrl, resolveIframeBaseUrl } from "../config/apiConfig";
 import useParametros from "../hooks/useParametros";
 
-const ValidacionRetenciones = () => {
+const Frm104 = () => {
     const { empresaSeleccionada } = useEmpresas();
     const { parametros, loading } = useParametros();
     const iframeSrc = buildIframeUrl(
-        "/retenciones/validacion",
+        "/regulatorios/formulario103",
         { ruc: empresaSeleccionada?.ruc },
         resolveIframeBaseUrl(parametros)
     );
@@ -22,7 +22,7 @@ const ValidacionRetenciones = () => {
         >
             {loading ? null : iframeSrc ? (
                 <iframe
-                    title="Validación de Retenciones"
+                    title="Formulario 104"
                     src={iframeSrc}
                     width="100%"
                     height="100%"
@@ -40,4 +40,4 @@ const ValidacionRetenciones = () => {
     );
 };
 
-export default ValidacionRetenciones;
+export default Frm104;
