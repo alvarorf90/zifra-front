@@ -289,6 +289,7 @@ const Recepcion = () => {
             <th>Fec. Autorización</th>
             <th>Emisor</th>
             <th>Doc. Asociado</th>
+            <th>SubTotal</th>
             <th>Total</th>
             <th>Descargar</th>
           </tr>
@@ -314,6 +315,7 @@ const Recepcion = () => {
                     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ") : "—"}
               </td>
               <td className="texto-doc-asoci">{u.documentoAsociado}</td>
+              <td>{u.subtotal?.toFixed(2)}</td>
               <td>{u.valorDocumento?.toFixed(2)}</td>
               <td>
                   <button className="btn-desc btn-toggle" title="RIDE" onClick={() => generarRide(u.claveAcceso)}>
