@@ -2,7 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { useEmpresas } from '../context/EmpresaContext';
-import { FiCalendar, FiDatabase, FiFileText } from "react-icons/fi";
+import { FiCalendar, FiClock, FiDatabase, FiFileText } from "react-icons/fi";
+import { proximaFechaDeclaracion } from "../utils/fechaDeclaracion";
+
+const MESES = [
+  "enero", "febrero", "marzo", "abril", "mayo", "junio",
+  "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+];
+
+function formatearFecha(fecha) {
+  const dia = String(fecha.getDate()).padStart(2, "0");
+  const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+  return `${dia}/${mes}/${fecha.getFullYear()}`;
+}
+
+function diasHasta(fecha) {
+  const hoy = new Date();
+  const inicioHoy = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+  const inicioFecha = new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate());
+  return Math.round((inicioFecha - inicioHoy) / 86400000);
+}
+
+function colorPlazo(fecha) {
+  const dias = diasHasta(fecha);
+  if (dias <= 1) return "#e53935";
+  if (dias <= 5) return "#fb8c00";
+  return "#7e57c2";
+}
+
+function detalleDeclaracion(info) {
+  const periodo = `${MESES[info.periodo.getMonth()]} ${info.periodo.getFullYear()}`;
+  const quien = info.especial ? "Contribuyente especial" : `Dígito ${info.digito}`;
+  const ajuste = info.ajustada ? " - pasa a día hábil" : "";
+  return `${quien}${ajuste} - periodo ${periodo}`;
+}
 
 const Bienvenido = () => {
   const [roles, setRoles] = useState([]);
@@ -37,6 +70,10 @@ const Bienvenido = () => {
       localStorage.setItem("empresaSeleccionada", JSON.stringify(empresas[0]));
     }
   }, [empresas, empresaSeleccionada, setEmpresaSeleccionada]);
+
+  const declaracion = proximaFechaDeclaracion(empresaSeleccionada?.ruc, {
+    contribuyenteEspecial: empresaSeleccionada?.contribuyenteEspecial,
+  });
 
   return (
     <div style={{ padding: "0px 15px" }}>
@@ -79,6 +116,19 @@ const Bienvenido = () => {
                   </h3>
                 </div>
               </div>
+
+              {declaracion && (
+                <div className="card" style={{ borderLeft: `5px solid ${colorPlazo(declaracion.fecha)}` }}>
+                  <div className="card-icon">
+                    <FiClock />
+                  </div>
+                  <div>
+                    <p className="card-label">Próxima Declaración</p>
+                    <h3 className="card-value">{formatearFecha(declaracion.fecha)}</h3>
+                    <p className="card-hint">{detalleDeclaracion(declaracion)}</p>
+                  </div>
+                </div>
+              )}
 
               {/* Pool */}
               {roles.includes('PYMES') && (

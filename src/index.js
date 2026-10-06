@@ -7,6 +7,9 @@ import './styles/general/global.css';
 import './styles/general/tabla.css';
 import './styles/general/modal.css';
 import "./styles/general/loading.css";
+import { iniciarActualizacion } from "./utils/actualizacion";
+
+iniciarActualizacion();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
