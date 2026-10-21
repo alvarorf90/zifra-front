@@ -7,7 +7,7 @@ const Frm104 = () => {
     const { empresaSeleccionada } = useEmpresas();
     const { parametros, loading } = useParametros();
     const iframeSrc = buildIframeUrl(
-        "/regulatorios/formulario103",
+        "/regulatorios/formulario104",
         { ruc: empresaSeleccionada?.ruc },
         resolveIframeBaseUrl(parametros)
     );

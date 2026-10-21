@@ -13,6 +13,7 @@ export const impuestoRetencion = {
       { codigo: "319", descripcion: "Cuotas de arrendamiento mercantil, inclusive la de opción de compra", porcentaje: 2 },
       { codigo: "320", descripcion: "Arrendamiento bienes inmuebles", porcentaje: 10 },
       { codigo: "322", descripcion: "Seguros y reaseguros (primas y cesiones)", porcentaje: 1 },
+      { codigo: "3250", descripcion: "Dividendos exentos (por no llegar a franja exenta o beneficio de otras leyes)", porcentaje: 0 }
     ],
   },
   "6": { // Impuesto a la salida de divisas

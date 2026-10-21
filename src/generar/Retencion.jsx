@@ -466,8 +466,8 @@ const Retencion = () => {
                                 <tr key={idx}>
                                     <td>{d.numFactura}</td>
                                     <td>
-                                        {d.fechaEmisionFac 
-                                            ? new Date(d.fechaEmisionFac).toLocaleDateString('es-EC', { day: '2-digit', month: '2-digit', year: 'numeric' }) 
+                                        {d.fechaEmisionFac
+                                            ? d.fechaEmisionFac.split("-").reverse().join("/")
                                             : "—"}
                                     </td>
                                     <td>{(d.baseImponible || 0).toFixed(2)}</td>
@@ -482,7 +482,7 @@ const Retencion = () => {
                                 </tr>
                             ))}
                         </tbody>
-                    </table>                    
+                    </table> 
                 </div>
 
                 <div className="documento-section documento-grid-totales"> 
