@@ -5,13 +5,15 @@ import logoZifra from '../img/logo_zifra.png';
 import useSessionManager from '../hooks/useSessionManager';
 import { clearSessionStorage } from '../utils/session';
 import { useLoading } from "../context/LoadingContext";
-import { FiFolder, FiFileText, FiSearch, FiHome, FiSettings, FiChevronDown, FiChevronRight,  FiArchive, FiLayers} from "react-icons/fi";
+import { FiFolder, FiFileText, FiSearch, FiHome, FiSettings, FiChevronDown, FiChevronRight,  FiArchive, FiLayers, FiBox} from "react-icons/fi";
 
 //OTROS ICONOS = FiLayers, FiBookOpen, FiPackage, FiGrid
 
 const RUTAS_SIN_PADDING = [
   '/ats/generar',
   '/ats/compraVentas',
+  '/ats/trsfAtsExcel',
+  '/ats/trsfAtsXml',
   '/consultar/validacionRetenciones',
 ];
 
@@ -32,6 +34,7 @@ const Layout = () => {
     if (text.includes("reportería")) return <FiFileText />;
     if (text.includes("anexos")) return <FiArchive />;
     if (text.includes("formularios")) return <FiLayers />;
+    if (text.includes("servicios")) return <FiBox />;
     return <FiFolder />; // por defecto
   };
 

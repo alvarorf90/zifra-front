@@ -129,6 +129,10 @@
   color: #ffffff !important;
 }
 
+.general-comp tbody tr.fila-anulada td {
+  background: #f6d0d0;
+}
+
 .btn-desc{
   border: none;
   padding: 6px 8px;

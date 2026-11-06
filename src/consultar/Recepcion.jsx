@@ -295,8 +295,10 @@ const Recepcion = () => {
           </tr>
         </thead>
         <tbody>
-          {emitidosPaginados.map((u, i) => (
-            <tr key={u.claveAcceso}>
+          {emitidosPaginados.map((u) => {
+            const anulado = u.estado === "ANU";
+            return (
+            <tr key={u.claveAcceso} className={anulado ? "fila-anulada" : undefined}>
               <td title={u.claveAcceso}>{u.numeroComprobante}</td>
               <td>{u.tipoComprobante === "01" ? "FAC" : u.tipoComprobante === "04" ? "NC" : u.tipoComprobante === "05" ? "ND" : 
                 u.tipoComprobante === "07" ? "RET" : u.tipoComprobante === "06" ? "GUÍA" : u.tipoComprobante === "03" ? "LIQ" : "Otros"}</td>
@@ -318,12 +320,18 @@ const Recepcion = () => {
               <td>{u.subtotal?.toFixed(2)}</td>
               <td>{u.valorDocumento?.toFixed(2)}</td>
               <td>
-                  <button className="btn-desc btn-toggle" title="RIDE" onClick={() => generarRide(u.claveAcceso)}>
-                      📙
-                  </button>
+                  {u.estado === "RECP" && (
+                    <button className="btn-desc btn-toggle" title="RIDE" onClick={() => generarRide(u.claveAcceso)}>
+                        📙
+                    </button>
+                  )}
+                  {anulado && (
+                    <span title="Comp Anulado" style={{marginRight:"5px", cursor:"pointer"}}>❌</span>
+                  )}
               </td>
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
 

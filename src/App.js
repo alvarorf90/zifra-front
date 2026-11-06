@@ -19,7 +19,10 @@ import Ats from './consultar/Ats';
 import Generar from './ats/Generar';
 import CatastroSRI from './consultar/CatastroSRI';
 import CompraVentas from './ats/CompraVentas';
+import TrsfAtsExcel from './ats/TrsfAtsExcel';
+import TrsfAtsXml from './ats/TrsfAtsXml';
 import ValidacionRetenciones from './consultar/ValidacionRetenciones';
+import AnulacionComprobantes from './consultar/AnulacionComprobantes';
 import Formulario103 from './formularios/Frm103';
 import Formulario104 from './formularios/Frm104';
 
@@ -59,7 +62,10 @@ const App = () => {
           <Route path="ats/generar" element={<Generar />} />
           <Route path="consultar/catastroSRI" element={<CatastroSRI />} />
           <Route path="ats/compraVentas" element={<CompraVentas />} />
+          <Route path="ats/trsfAtsExcel" element={<TrsfAtsExcel />} />
+          <Route path="ats/trsfAtsXml" element={<TrsfAtsXml />} />
           <Route path="consultar/validacionRetenciones" element={<ValidacionRetenciones />} />
+          <Route path="consultar/anulacionComprobantes" element={<AnulacionComprobantes />} />
           <Route path="formularios/frm103" element={<Formulario103 />} />
           <Route path="formularios/frm104" element={<Formulario104 />} />
 
